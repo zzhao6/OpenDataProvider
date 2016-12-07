@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 namespace OpenDataProvider
 {
     // get data from open source libraries
+    // return json formatted strings
 
     // Yahoo Finance API:
     // stock quote, stock history
