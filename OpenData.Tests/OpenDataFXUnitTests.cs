@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace OpenData.Tests
 {
-    public class Class1
+    class OpenDataFXUnitTests
     {
     }
 }
