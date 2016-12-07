@@ -12,7 +12,7 @@ namespace OpenDataProvider
         private readonly WebClient wcWebClient;
         private const string fxApiBaseUrl = "http://api.fixer.io/";
 
-        OpenDataFX()
+        public OpenDataFX()
         {
             wcWebClient = new WebClient();
         }
@@ -34,7 +34,7 @@ namespace OpenDataProvider
                 {
                     var sym1 = symbol.Substring(0, 3);
                     var sym2 = symbol.Substring(3, 3);
-                    url = fxApiBaseUrl + $"latest?symbols={sym1},{sym2}";
+                    url = fxApiBaseUrl + $"latest?base={sym1}&symbols={sym2}";
                     break;
                 }
                 default:
@@ -62,7 +62,7 @@ namespace OpenDataProvider
                 {
                     var sym1 = symbol.Substring(0, 3);
                     var sym2 = symbol.Substring(3, 3);
-                    url = fxApiBaseUrl + $"{asOfDateStr}?symbols={sym1},{sym2}";
+                    url = fxApiBaseUrl + $"{asOfDateStr}?base={sym1}&symbols={sym2}";
                     break;
                 }
                 default:
@@ -103,7 +103,7 @@ namespace OpenDataProvider
             //}
 
             var response = "";
-            for (var dt = startDate; dt <= endDate; dt.AddDays(1))
+            for (var dt = startDate; dt <= endDate; dt = dt.AddDays(1))
             {
                 var asOfDateStr = dt.ToString("yyyy-MM-dd");
                 response += await GetHistory(symbol, dt);
