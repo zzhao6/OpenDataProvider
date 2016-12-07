@@ -14,6 +14,7 @@ namespace OpenDataProvider
         //private readonly DateTime sDate = new DateTime(1990, 1, 1); // default start date
         //private readonly DateTime eDate = new DateTime(2016, 10, 1);    // default end date
 
+        // TODO: think about include YQL here
         private string yahooStockQuoteBaseUrl1 =
             $"https://query.yahooapis.com/v1/public/yql?q=select%20*%20from%20yahoo.finance.quotes%20where%20symbol%20in%20(%22";
 
