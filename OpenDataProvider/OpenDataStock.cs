@@ -14,15 +14,31 @@ namespace OpenDataProvider
         //private readonly DateTime sDate = new DateTime(1990, 1, 1); // default start date
         //private readonly DateTime eDate = new DateTime(2016, 10, 1);    // default end date
 
-        
+
         private string yahooStockQuoteBaseUrl1 =
             $"https://query.yahooapis.com/v1/public/yql?q=select%20*%20from%20yahoo.finance.quotes%20where%20symbol%20in%20(%22";
-        private string yahooStockQuoteBaseUrl2 = "%22)&format=json&env=store%3A%2F%2Fdatatables.org%2Falltableswithkeys&callback=";
 
-        private string yahooStockHistUrl1 = "https://query.yahooapis.com/v1/public/yql?q=select%20*%20from%20yahoo.finance.historicaldata%20where%20symbol%20%3D%20%22";
+        private string yahooStockQuoteBaseUrl2 =
+            "%22)&format=json&env=store%3A%2F%2Fdatatables.org%2Falltableswithkeys&callback=";
+
+        private string yahooStockHistUrl1 =
+            "https://query.yahooapis.com/v1/public/yql?q=select%20*%20from%20yahoo.finance.historicaldata%20where%20symbol%20%3D%20%22";
+
         private string yahooStockHistUrl2 = "%22%20and%20startDate%20%3D%20%22";
         private string yahooStockHistUrl3 = "%22%20and%20endDate%20%3D%20%22";
-        private string yahooStockHistUrl4 = "%22&format=json&diagnostics=true&env=store%3A%2F%2Fdatatables.org%2Falltableswithkeys&callback=";
+
+        private string yahooStockHistUrl4 =
+            "%22&format=json&diagnostics=true&env=store%3A%2F%2Fdatatables.org%2Falltableswithkeys&callback=";
+
+        private string yahooDvdUrl1 =
+            "https://query.yahooapis.com/v1/public/yql?q=select%20*%20from%20yahoo.finance.dividendhistory%20where%20symbol%20%3D%20%22";
+
+        private string yahooDvdUrl2 = "%22%20and%20startDate%20%3D%20%22";
+        private string yahooDvdUrl3 = "%22%20and%20endDate%20%3D%20%22";
+
+        private string yahooDvdUrl4 =
+            "%22&format=json&diagnostics=true&env=store%3A%2F%2Fdatatables.org%2Falltableswithkeys&callback=";
+
         public OpenDataStock()
         {
             wcWebClient = new WebClient();
@@ -51,12 +67,26 @@ namespace OpenDataProvider
             return response;
         }
 
-        public async Task<string> GetSplit(string symbol, DateTime startDate)
+        public async Task<string> GetDividend(string symbol, DateTime startDate, DateTime? endDate = null)
         {
-            throw new NotImplementedException();
+            var startDateStr = startDate.ToString("yyyy-MM-dd");
+            string endDateStr = null;
+            if (endDate.HasValue)
+            {
+                endDateStr = endDate.Value.ToString("yyyy-MM-dd");
+            }
+            else
+            {
+                endDateStr = DateTime.Now.ToString("yyyy-MM-dd");
+            }
+            var url = yahooDvdUrl1 + symbol + yahooDvdUrl2 + startDateStr +
+                      yahooDvdUrl3 + endDateStr + yahooDvdUrl4;
+
+            var response = await wcWebClient.DownloadStringTaskAsync(url);
+            return response;
         }
 
-        public async Task<string> GetDividend(string symbol, DateTime startDate)
+        public async Task<string> GetSplit(string symbol, DateTime startDate)
         {
             throw new NotImplementedException();
         }
