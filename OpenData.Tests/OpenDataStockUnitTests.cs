@@ -42,5 +42,22 @@ namespace OpenData.Tests
             response = await odStk.GetHistory(sym, startDate, endDate);
             Assert.IsTrue(response.Contains("\"count\":0"));
         }
+
+        [Test]
+        public async Task ShouldGetStockDvd()
+        {
+            var startDate = new DateTime(2001, 1, 1);
+            var endDate = new DateTime(2002, 1, 1);
+            var sym = "SPY";
+            var response = await odStk.GetDividend(sym, startDate, endDate);
+            Assert.IsFalse(response.Contains("\"count\":0"));
+
+            response = await odStk.GetDividend(sym, startDate);
+            Assert.IsFalse(response.Contains("\"count\":0"));
+
+            sym = "XXXXX";
+            response = await odStk.GetDividend(sym, startDate);
+            Assert.IsTrue(response.Contains("\"count\":0"));
+        }
     }
 }
