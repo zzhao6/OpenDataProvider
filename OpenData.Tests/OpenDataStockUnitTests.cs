@@ -22,8 +22,25 @@ namespace OpenData.Tests
         [Test]
         public async Task ShouldGetStockQuote()
         {
-            var response = await odStk.GetQuote("MFST");
-            Assert.IsNotNull(response);
+            var response = await odStk.GetQuote("MSFT");
+            Assert.IsFalse(response.Contains("\"LastTradePriceOnly\":null"));
+
+            response = await odStk.GetQuote("XXXXX");
+            Assert.IsTrue(response.Contains("\"LastTradePriceOnly\":null"));
+        }
+
+        [Test]
+        public async Task ShouldGetStockHist()
+        {
+            var startDate = new DateTime(2001, 1, 1);
+            var endDate = new DateTime(2002, 1, 1);
+            var sym = "SPY";
+            var response = await odStk.GetHistory(sym, startDate, endDate);
+            Assert.IsFalse(response.Contains("\"count\":0"));
+
+            sym = "XXXXX";
+            response = await odStk.GetHistory(sym, startDate, endDate);
+            Assert.IsTrue(response.Contains("\"count\":0"));
         }
     }
 }
