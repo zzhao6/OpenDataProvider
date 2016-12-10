@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using NUnit.Framework;
 using OpenDataProvider;
@@ -33,7 +31,9 @@ namespace OpenData.Tests
             var expiry = expiriesJson.Substring(idx1 + 1, idx2 - idx1 - 1);
             DateTimeOffset dateTimeOffset = DateTimeOffset.FromUnixTimeSeconds(Convert.ToInt64(expiry));
             DateTime expiryDateTime = dateTimeOffset.UtcDateTime;
+
             var res = await odOption.GetQuote("AAPL", expiryDateTime);
+
             Assert.IsTrue(res.Contains(expiry));
             Assert.IsFalse(res.Contains("\"calls\":[]"));
             Assert.IsFalse(res.Contains("\"puts\":[]"));
