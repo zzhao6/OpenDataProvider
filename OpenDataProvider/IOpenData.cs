@@ -26,10 +26,10 @@ namespace OpenDataProvider
 
     public interface IOpenDataOption
     {
-        string GetExpiries(string symbol);
-        string GetQuote(string symbol, DateTime expiry);
+        Task<string> GetExpiries(string symbol);
+        Task<string> GetQuote(string symbol, DateTime expiry);
         // For future implementation
-        string GetHistory(string symbol, DateTime expiry, double strike, DateTime asOfDate);
-        string GetHistory(string symbol, DateTime expiry, double strike, DateTime startDate, DateTime endDate);
+        Task<string> GetHistory(string symbol, DateTime expiry, double strike, DateTime asOfDate);
+        Task<string> GetHistory(string symbol, DateTime expiry, double strike, DateTime startDate, DateTime endDate);
     }
 }
